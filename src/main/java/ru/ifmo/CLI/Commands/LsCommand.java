@@ -4,6 +4,7 @@ import ru.ifmo.CLI.InterpreterEnvironment;
 import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class LsCommand extends Command {
     @Override
@@ -17,8 +18,11 @@ public class LsCommand extends Command {
             path += '/' + arguments.get(0);
         }
         File file = new File(path);
-        if (file.isDirectory()) {
-            System.out.println("result");
+        if (!file.isDirectory()) {
+            return stringToIOData("isn't a directory", true);
+        }
+        for (File fileOne : file.listFiles()) {
+           result.add(stringToIOData(fileOne.getName(), true ));
         }
         return result;
     }
